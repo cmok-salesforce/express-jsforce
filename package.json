@@ -20,5 +20,8 @@
     "express-session": "^1.15.6",
     "jsforce": "^1.9.1",
     "properties-reader": "0.0.16"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
   }
 }

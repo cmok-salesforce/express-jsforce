@@ -19,10 +19,10 @@ var sslOptions = {
 };
 
 var server = express();
-http.createServer(server).listen(3000);
-https.createServer(sslOptions, server).listen(3443)
+http.createServer(server).listen(process.env.EXPRESS_HTTP_PORT);
+https.createServer(sslOptions, server).listen(process.env.EXPRESS_HTTPS_PORT)
 
 
 server.get('/', function (req, res) {
-    res.send("Hello World!" + properties.get('sf.devciam.username'));
+    res.send("Hello World! " + properties.get('sf.devciam.username'));
 });
