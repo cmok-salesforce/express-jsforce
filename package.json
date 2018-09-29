@@ -1,0 +1,16 @@
+{
+  "name": "express-jsforce",
+  "version": "1.0.0",
+  "description": "express jsforce playground",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "jsforce",
+    "salesforce"
+  ],
+  "author": "Chenda Mok",
+  "license": "ISC"
+}
