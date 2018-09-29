@@ -8,7 +8,7 @@ var fs = require('fs');
 var sslOptions = {
     key: fs.readFileSync('key.pem'),
     cert: fs.readFileSync('cert.pem'),
-    passphrase: "changeit"
+    passphrase: process.env.SSL_PASSPHRASE
 };
 
 var server = express();
