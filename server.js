@@ -28,7 +28,7 @@ const oauth2 = new jsforce.OAuth2({
     //clientId and Secret will be provided when you create a new connected app in your SF developer account
     clientId: properties.get('sf.devciam.APIM_CIAM.consumer_id'),
     //use getRaw, otherwise truncate
-    clientSecret: properties.getRaw('sf.devciam.APIM_CIAM.consumer_secret')+'' ,
+    clientSecret: properties.getRaw('sf.devciam.APIM_CIAM.consumer_secret') ,
     //redirectUri : 'http://localhost:' + port +'/token'
     redirectUri: properties.get('sf.devciam.APIM_CIAM.callback_url_knet'),
 });
@@ -125,7 +125,7 @@ https.createServer(sslOptions, app).listen(process.env.EXPRESS_HTTPS_PORT)
 
 app.get('/', function (req, res) {
     var env = req.query.env;
-    res.write('env=' + env);
-    res.write('username=' + properties.get('sf.devciam.username'));
+    res.write('<P>env=' + env);
+    res.write('<P>username=' + properties.get(`sf.${env}.username`));
     res.end();
 });
