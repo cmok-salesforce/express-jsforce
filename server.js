@@ -107,7 +107,7 @@ app.get('/userinfo', function (req, res) {
         console.log("display name: " + res1.display_name);
         //res.json(res1);
         res.write('<h1>accessToken</h1>');
-        res.write(req.session.accessToken);
+        res.write('<pre>' + req.session.accessToken + '</pre>');
         res.write('<h2>UserInfo</h2>');
         res.write('<pre>' + JSON.stringify(res1,undefined,2) + '</pre>');
         res.end();
