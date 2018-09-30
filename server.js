@@ -8,7 +8,9 @@ const bodyParser = require('body-parser');
 var http = require('http');
 var https = require('https');
 var fs = require('fs');
-var util = require('util')
+var util = require('util');
+
+process.title = myApp;
 
 var PropertiesReader = require('properties-reader');
 var properties = PropertiesReader(process.env.BUILD_PROPERTIE_LOCATION);
@@ -122,5 +124,8 @@ http.createServer(app).listen(process.env.EXPRESS_HTTP_PORT);
 https.createServer(sslOptions, app).listen(process.env.EXPRESS_HTTPS_PORT)
 
 app.get('/', function (req, res) {
-    res.send(properties.get('sf.devciam.username'));
+    var env = req.query.env;
+    res.write('env=' + env);
+    res.write('username=' + properties.get('sf.devciam.username'));
+    res.end();
 });

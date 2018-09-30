@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "go": "nohup nodemon ./server.js > out.log &"
+    "go": "nohup nodemon ./server.js > out.log &",
+    "stop": "pkill --signal SIGINT myApp"
   },
   "keywords": [
     "express",
