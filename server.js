@@ -10,7 +10,7 @@ var https = require('https');
 var fs = require('fs');
 var util = require('util');
 
-process.title = myApp;
+process.title = 'myApp';
 
 var PropertiesReader = require('properties-reader');
 var properties = PropertiesReader(process.env.BUILD_PROPERTIE_LOCATION);
