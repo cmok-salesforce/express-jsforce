@@ -19,7 +19,7 @@ var sslOptions = {
     passphrase: process.env.SSL_PASSPHRASE
 };
 
-//jsForce connection
+//jsForce connection --
 const oauth2 = new jsforce.OAuth2({
     // you can change loginUrl to connect to sandbox or prerelease env.
     loginUrl: properties.get('sf.devciam.instanceUrl'),

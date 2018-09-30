@@ -4,3 +4,4 @@ cert.pem
 key.pem
 config.js
 build.properties
+out.log
