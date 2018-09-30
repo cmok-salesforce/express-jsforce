@@ -3,7 +3,7 @@ require('dotenv').config();
 var express = require('express');
 const jsforce = require('jsforce');
 const session = require('express-session');
-const config = require('./config');
+//const config = require('./config');
 const bodyParser = require('body-parser');
 var http = require('http');
 var https = require('https');
@@ -28,7 +28,7 @@ const oauth2 = new jsforce.OAuth2({
     //use getRaw, otherwise truncate
     clientSecret: properties.getRaw('sf.devciam.APIM_CIAM.consumer_secret')+'' ,
     //redirectUri : 'http://localhost:' + port +'/token'
-    redirectUri: properties.get('sf.devciam.APIM_CIAM.callback_url'),
+    redirectUri: properties.get('sf.devciam.APIM_CIAM.callback_url_knet'),
 });
 
 console.log('build.propertie: ' + process.env.BUILD_PROPERTIE_LOCATION);
@@ -38,6 +38,7 @@ console.log('loginUrl: ' + properties.get('sf.devciam.instanceUrl'));
 console.log('clientId: ' + properties.get('sf.devciam.APIM_CIAM.consumer_id'));
 console.log('clientSecret: ' + properties.getRaw('sf.devciam.APIM_CIAM.consumer_secret'));
 console.log('callback: ' + properties.get('sf.devciam.APIM_CIAM.callback_url'));
+console.log('callback knet: ' + properties.get('sf.devciam.APIM_CIAM.callback_url_knet'));
 //process.exit;
 
 var app = express();
