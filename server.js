@@ -10,7 +10,7 @@ var https = require('https');
 var fs = require('fs');
 var util = require('util');
 
-process.title = 'myApp';
+process.title = process.env.APPLICATION_NAME;
 
 var PropertiesReader = require('properties-reader');
 var properties = PropertiesReader(process.env.BUILD_PROPERTIE_LOCATION);
@@ -25,10 +25,24 @@ var sslOptions = {
 const oauth2 = new jsforce.OAuth2({
     // you can change loginUrl to connect to sandbox or prerelease env.
     loginUrl: properties.get('sf.devciam.instanceUrl'),
+    loginUrlCommunity: properties.get('sf.devciam.serverUrlExternal'),
     //clientId and Secret will be provided when you create a new connected app in your SF developer account
     clientId: properties.get('sf.devciam.APIM_CIAM.consumer_id'),
     //use getRaw, otherwise truncate
     clientSecret: properties.getRaw('sf.devciam.APIM_CIAM.consumer_secret') ,
+    //redirectUri : 'http://localhost:' + port +'/token'
+    redirectUri: properties.get('sf.devciam.APIM_CIAM.callback_url_knet'),
+});
+
+//jsForce connection --
+const oauth2Community = new jsforce.OAuth2({
+    // you can change loginUrl to connect to sandbox or prerelease env.
+    loginUrl: 'https://devciam-cmp-adecco.cs83.force.com/identity',
+    //authzServiceUrl: 'https://devciam-cmp-adecco.cs83.force.com/identity/services/oauth2/authorize/expid_aem',
+    //clientId and Secret will be provided when you create a new connected app in your SF developer account
+    clientId: properties.get('sf.devciam.APIM_CIAM.consumer_id'),
+    //use getRaw, otherwise truncate
+    clientSecret: properties.getRaw('sf.devciam.APIM_CIAM.consumer_secret'),
     //redirectUri : 'http://localhost:' + port +'/token'
     redirectUri: properties.get('sf.devciam.APIM_CIAM.callback_url_knet'),
 });
@@ -56,9 +70,18 @@ app.use(bodyParser.urlencoded({ extended: true }))
 /**
 * Login endpoint
 */
-app.get('/oauth2/login', function (req, res) {
+app.get('/oauth2/internal/login', function (req, res) {
     // Redirect to Salesforce login/authorization page
     res.redirect(oauth2.getAuthorizationUrl({ scope: 'api id refresh_token' }));
+});
+
+/**
+* Login endpoint
+*/
+app.get('/oauth2/external/login', function (req, res) {
+    // Redirect to Salesforce login/authorization page
+    console.log('*** authorize URL=' + oauth2Community.getAuthorizationUrl({ scope: 'api id refresh_token' }));
+    res.redirect(oauth2Community.getAuthorizationUrl({ scope: 'api id refresh_token' }));
 });
 
 /**
@@ -109,7 +132,9 @@ app.get('/userinfo', function (req, res) {
         console.log("display name: " + res1.display_name);
         //res.json(res1);
         res.write('<h1>accessToken</h1>');
-        res.write('<pre>' + req.session.accessToken + '</pre>');
+        res.write('<p/><pre>' + req.session.accessToken + '</pre>');
+        res.write('<h2>session</h2>');
+        res.write('<pre>' + JSON.stringify(req.session,undefined,2) + '</pre>');
         res.write('<h2>UserInfo</h2>');
         res.write('<pre>' + JSON.stringify(res1,undefined,2) + '</pre>');
         res.end();
