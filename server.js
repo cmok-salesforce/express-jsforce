@@ -145,7 +145,7 @@ app.get('/userinfo', function (req, res) {
 
 
 
-http.createServer(app).listen(process.env.EXPRESS_HTTP_PORT);
+//http.createServer(app).listen(process.env.EXPRESS_HTTP_PORT);
 https.createServer(sslOptions, app).listen(process.env.EXPRESS_HTTPS_PORT)
 
 app.get('/', function (req, res) {
